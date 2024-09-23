@@ -1,0 +1,83 @@
+CREATE TABLE questions (
+    id SERIAL PRIMARY KEY,
+    question_text TEXT NOT NULL,
+    next_question_id INT
+);
+
+CREATE TABLE options (
+    id SERIAL PRIMARY KEY,
+    question_id INT,
+    option_text TEXT NOT NULL,
+    next_question_id INT,
+    FOREIGN KEY (question_id) REFERENCES questions(id)
+);
+
+CREATE TABLE answers (
+    id SERIAL PRIMARY KEY,
+    question_id INT,
+    user_id INT,
+    option_id INT,
+    FOREIGN KEY (question_id) REFERENCES questions(id),    
+    FOREIGN KEY (users_id) REFERENCES users(id),
+    FOREIGN KEY (option_id) REFERENCES options(id)
+);
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR,
+    email VARCHAR,
+    phone VARCHAR,
+    score INT,
+    status INT,
+);
+
+
+INSERT INTO questions (question_text, next_question_id) VALUES
+('What is your favorite web framework?', NULL),
+('What features do you find most useful in a web framework?', NULL),
+('How do you prefer to deploy your applications?', NULL),
+('What is your biggest challenge when coding?', NULL),
+('How do you manage dependencies in your projects?', NULL),
+('What tools do you use for debugging?', NULL),
+('How do you test your code?', NULL),
+('What programming languages do you want to learn next?', NULL),
+('How often do you write documentation for your code?', NULL),
+('What kind of projects do you enjoy the most?', NULL);
+
+-- Insert corresponding options
+INSERT INTO options (question_id, option_text, next_question_id) VALUES
+(1, 'React', 2),
+(1, 'Angular', 2),
+(1, 'Vue.js', 2),
+(1, 'Django', 2),
+(2, 'Modularity', 3),
+(2, 'Performance', 3),
+(2, 'Community support', 3),
+(2, 'Documentation', 3),
+(3, 'Cloud services', 4),
+(3, 'On-premises', 4),
+(3, 'Containers (Docker)', 4),
+(3, 'Serverless', 4),
+(4, 'Time management', 5),
+(4, 'Understanding requirements', 5),
+(4, 'Debugging', 5),
+(5, 'Package managers (npm, pip)', 6),
+(5, 'Manual tracking', 6),
+(5, 'Docker', 6),
+(6, 'Console logs', 7),
+(6, 'Debugger tools', 7),
+(6, 'Third-party tools', 7),
+(7, 'Unit tests', 8),
+(7, 'Integration tests', 8),
+(7, 'Manual testing', 8),
+(8, 'JavaScript', 9),
+(8, 'Go', 9),
+(8, 'Rust', 9),
+(8, 'Kotlin', 9),
+(9, 'Always', NULL),
+(9, 'Sometimes', NULL),
+(9, 'Rarely', NULL),
+(10, 'Web applications', NULL),
+(10, 'Mobile applications', NULL),
+(10, 'APIs', NULL),
+(10, 'Games', NULL);
